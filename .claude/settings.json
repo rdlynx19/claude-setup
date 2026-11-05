@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(colcon build:*)",
+      "Bash(colcon test:*)",
+      "Bash(colcon test-result:*)",
+      "Bash(cmake:*)",
+      "Bash(make:*)",
+      "Bash(ctest:*)",
+      "Bash(pytest:*)",
+      "Bash(python3 -m pytest:*)",
+      "Bash(ruff check:*)",
+      "Bash(ruff format:*)",
+      "Bash(ament_flake8:*)",
+      "Bash(ament_pep257:*)",
+      "Bash(ament_cpplint:*)",
+      "Bash(ament_uncrustify:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(./build/**)",
+      "Read(./install/**)",
+      "Read(./log/**)",
+      "Read(**/__pycache__/**)",
+      "Read(./.venv/**)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/format.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
